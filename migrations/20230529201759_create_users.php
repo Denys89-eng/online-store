@@ -19,14 +19,16 @@ final class CreateUsers extends AbstractMigration
     public function up(): void
     {
         $this->table('Users')
-        ->addColumn('login','string')
-        ->addColumn('password','string')
-        ->create();
+            ->addColumn('login', 'string')
+            ->addColumn('password', 'string')
+            ->create();
+
 
     }
-    public function down():void 
+
+    public function down(): void
     {
-        $this->table('Users')->drop()->save();
+
     }
 
 

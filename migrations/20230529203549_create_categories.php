@@ -27,8 +27,6 @@ final class CreateCategories extends AbstractMigration
     }
     public function down(): void
     {
-        $this->table('categories')
-            ->drop()
-            ->save();
+
     }
 }

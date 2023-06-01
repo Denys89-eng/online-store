@@ -1,6 +1,6 @@
 <?php
     
-    interface Controller {
-        public function index(string $var);
+    interface ControllerInterface {
+        public function index();
     
     }

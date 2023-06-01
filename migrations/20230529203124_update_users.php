@@ -19,6 +19,12 @@ final class UpdateUsers extends AbstractMigration
      */
     public function change(): void
     {
-        $this->table('Users')->addColumn('email', 'string')->update();
+        $this->table('Users')
+            ->addColumn('email', 'string')
+            ->update();
+//        $this->table('Products')
+//            ->addColumn('title', 'string')
+//            ->addColumn('description', 'text')
+//            ->addColumn('price', 'string')
     }
 }
