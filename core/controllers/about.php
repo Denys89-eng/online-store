@@ -1,9 +1,16 @@
 <?php
 
 
-class About implements ControllerInterface {
+class About extends Container implements ControllerInterface {
     public function index()
     {
-        // TODO: Implement index() method.
+
+        $twig = $this->twig();
+        $html = $twig->render('Layouts/header.twig');
+        $html .= $twig->render('about.twig');
+        $html .= $twig->render('Layouts/footer.twig');
+        echo $html;
+
+
     }
 }

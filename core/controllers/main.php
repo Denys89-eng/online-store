@@ -8,11 +8,16 @@
  *
   */
 
-class Main implements ControllerInterface
+class Main extends Container implements ControllerInterface
 {
     public function index()
     {
-        echo 'hello';
+
+       $twig = $this->twig();
+       $html = $twig->render('Layouts/header.twig');
+       $html .= $twig->render('main.twig');
+       $html .= $twig->render('Layouts/footer.twig');
+       echo $html;
     }
 }
 

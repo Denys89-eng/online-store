@@ -4,10 +4,11 @@ $uri = trim($_SERVER['REQUEST_URI'], '/');
 if ($uri === '') {
     $array = explode('|', $routes['home']);
 } else {
-    if (isset($array[$uri])) {
+    if (isset($routes[$uri])) {
         $array = explode('|', $routes[$uri]);
     } else {
         $array = explode('|', $routes['error']);
+        Container::monolog("Обращение по не существуеpему URI $uri c IP $_SERVER[REMOTE_ADDR]");
     }
 }
 
@@ -22,9 +23,11 @@ if (file_exists($file)) {
         $n = new $class;
         $n->$method();
     } else {
+        Container::monolog('Class or method not found');
         die('Class or method not found');
     }
 
 } else {
+    Container::monolog('Controller not found');
     die('Controller not found');
 }

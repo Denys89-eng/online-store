@@ -1,8 +1,15 @@
 <?php
+session_start();
+ob_start();
 
 require_once 'vendor/autoload.php';
+$dotenv = Dotenv\Dotenv::createImmutable('config');
+$dotenv->load();
+require_once 'config/connect.php';
 require_once 'core/interfaces/controllerInterface.php';
-require_once  'config/routes.php';
+require_once 'config/routes.php';
+require_once 'core/helpers/safeRequests.php';
+require_once 'core/helpers/container.php';
 require_once 'core/router.php';
 
 
@@ -35,8 +42,9 @@ require_once 'core/router.php';
 
 
 
+
 //require_once 'vendor/autoload.php';
-//use \RedBeanPHP\R as R;
+//use \RedBeanPHP\R;
 //
 //R::setup("mysql:host=localhost;dbname=shop",$_ENV['login'],"qwerty1234");
 //
@@ -65,13 +73,9 @@ require_once 'core/router.php';
 //R::exec('DELETE FROM items WHERE id=1');
 
 
-
 //$r = R::load('items', 1);
 //$r->tel = 11111111;
 //R::store($r);
-
-
-
 
 
 //try {
@@ -83,7 +87,6 @@ require_once 'core/router.php';
 //}catch(PDOException $e) {
 //   echo $e->getMessage();
 //}
-
 
 
 //$array = ['red','green','blue'];
