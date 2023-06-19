@@ -2,7 +2,6 @@
 
 use \RedBeanPHP\R;
 
-
 class Admin extends Container implements ControllerInterface
 {
 
@@ -55,10 +54,38 @@ class Admin extends Container implements ControllerInterface
         $page = $twig->render('dashboard/users.twig');
         echo $twig->render('dashboard/admin.twig', ['content' => $page]);
     }
-    public function categories(){
+
+    public function categories()
+    {
+        //______________
+        $categories = R::getAll('SELECT * FROM categories');
+        if (isset($_POST['create_category'])) {
+
+            $arr = R::getRow("SELECT COUNT(*) as total FROM 
+                             categories WHERE title = ?", [$_POST['category_ru']]);
+            d($arr);
+            if ($arr['total'] == 0) {
+                $c = R::dispense('categories');
+                $c->title = safeRequests::clearData($_POST['category_ru']);
+                $c->link = safeRequests::clearData($_POST['category_en']);
+                $c->parentID = safeRequests::clearData($_POST['parent_category']);
+
+                R::store($c);
+                header('location: /@admin/categories/');
+            } else {
+                echo '<script>alert("Категория уже существует"); window.location.href = window.location.href</script>';
+            }
+
+        } //add new cat
+        //+++++++++++++
+
+
+        $categories2 = R::getAll('SELECT * FROM categories ORDER BY id DESC');
         $twig = $this->twig();
-        $page = $twig->render('dashboard/categories.twig');
+        $page = $twig->render('dashboard/categories.twig', ["array" => $categories, "rows" => $categories2]);
         echo $twig->render('dashboard/admin.twig', ['content' => $page]);
+
+
     }
 
 
@@ -79,6 +106,13 @@ class Admin extends Container implements ControllerInterface
         } else {
             echo 'login or password Не существует!!!';
         }
+    }
+
+    public function delcat()
+    {
+        echo ARGUMENT;
+        R::exec('DELETE FROM categories WHERE id = ?', [ARGUMENT]);
+        header('location: /@admin/categories/');
     }
 
     public function exit()

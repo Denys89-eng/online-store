@@ -5,15 +5,17 @@
 <section>
     <fieldset>
         <legend>Add new category</legend>
-        <form action="" class="category-form">
-            <input id="input-ru" type="text" placeholder="Create categories ru">
-            <input id="input-en" type="text" placeholder="Create categories en">
+        <form action="" class="category-form" method="post">
+            <input name="category_ru" id="input-ru" type="text" placeholder="Create categories ru">
+            <input name="category_en" id="input-en" type="text" placeholder="Create categories en">
 
-            <select name="" id="">
-
+            <select name="parent_category" id="">
+                <option hidden="hidden" value="0">Выберите родительскую категорию</option>
+                {% for item in array %}
+                    <option value="{{ item.id }}">{{ item.title }}</option>
+                {% endfor %}
             </select>
-
-            <button>Add categories</button>
+            <button name="create_category" type="submit">Add categories</button>
         </form>
     </fieldset>
 </section>
@@ -33,36 +35,23 @@
                 <td>parent:</td>
                 <td>remote:</td>
             </tr>
+
             </thead>
             <tbody>
-            <tr>
-                <td>1</td>
-                <td>Refrigerators</td>
-                <td>Refrigerators</td>
-                <td>--</td>
-                <td><a href="" title="delete">delete</a> <a href="">edit</a></td>
-            </tr>
-            <tr>
-                <td>id:</td>
-                <td>title-ru:</td>
-                <td>title_en:</td>
-                <td>parent:</td>
-                <td>remote:</td>
-            </tr>
-            <tr>
-                <td>id:</td>
-                <td>title-ru:</td>
-                <td>title_en:</td>
-                <td>parent:</td>
-                <td>remote:</td>
-            </tr>
-            <tr>
-                <td>id:</td>
-                <td>title-ru:</td>
-                <td>title_en:</td>
-                <td>parent:</td>
-                <td>remote:</td>
-            </tr>
+
+            {% for elem in rows %}
+                <tr>
+                    <td>{{ elem.id }}</td>
+                    <td>{{ elem.title }}</td>
+                    <td>{{ elem.link }}</td>
+                    <td>{{ elem.parentID }}</td>
+                    <td>
+                        <a href="/@admin/delcat/{{ elem.id }}/" title="delete">delete</a>
+                        <a href="">edit</a>
+                    </td>
+                </tr>
+
+           {% endfor %}
 
             </tbody>
         </table>

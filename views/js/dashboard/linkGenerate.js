@@ -1,9 +1,9 @@
-export function LinkGenerate(rusField,enField) {
+export function LinkGenerate(rusField, enField) {
     let inputRu = document.querySelector(rusField)
     let inputEn = document.querySelector(enField)
 
 
-    if(inputRu && inputEn) {
+    if (inputRu && inputEn) {
         inputRu.addEventListener('keyup', function () {
 
             let letter = {
@@ -38,12 +38,10 @@ export function LinkGenerate(rusField,enField) {
                 '_': ' ',
             }
 
-
             let wordArr = this.value.split('')
-
             wordArr.forEach((val, key) => {
                 for (const eng in letter) {
-                    if (val == letter[eng]) {
+                    if (val === letter[eng]) {
                         wordArr[key] = eng
                     }
                 }
@@ -52,8 +50,6 @@ export function LinkGenerate(rusField,enField) {
             inputEn.value = wordArr.join('')
         })
     }
-
-
 
 
 }

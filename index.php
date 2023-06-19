@@ -2,6 +2,15 @@
 session_start();
 ob_start();
 
+if (!file_exists('logs')) {
+    mkdir('logs',0777);
+}
+
+if (!file_exists('logs/systems.ini')) {
+    touch('logs/systems.ini');
+    chmod('logs/systems.ini',0777);
+}
+
 require_once 'vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable('config');
 $dotenv->load();

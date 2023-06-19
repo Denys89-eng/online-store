@@ -16,4 +16,7 @@ $routes = [
     '@admin/users' => 'admin|users',
     '@admin/settings' => 'admin|settings',
     '@admin/categories' => 'admin|categories',
+    '@admin/delcat/.*' => 'admin|delcat',
 ];
+
+

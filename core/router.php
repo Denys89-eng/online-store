@@ -1,9 +1,17 @@
 <?php
-$uri = trim($_SERVER['REQUEST_URI'], '/');
+$uri = trim( parse_url($_SERVER['REQUEST_URI'],PHP_URL_PATH), '/');
 
 if ($uri === '') {
     $array = explode('|', $routes['home']);
 } else {
+   $section = explode('/',$uri);
+
+   if(count($section)==3){
+       $uri = $section[0]."/".$section[1]."/.*";
+
+       define("ARGUMENT",$section[2]);
+   }
+
     if (isset($routes[$uri])) {
         $array = explode('|', $routes[$uri]);
     } else {
