@@ -26,13 +26,6 @@ class Admin extends Container implements ControllerInterface
 
     }
 
-    public function products()
-    {
-        $twig = $this->twig();
-        $page = $twig->render('dashboard/products.twig');
-        echo $twig->render('dashboard/admin.twig', ['content' => $page]);
-
-    }
 
     public function settings()
     {
@@ -55,15 +48,81 @@ class Admin extends Container implements ControllerInterface
         echo $twig->render('dashboard/admin.twig', ['content' => $page]);
     }
 
+    public function products()
+    {
+
+        if (isset($_POST['create_product'])) {
+            if ($_FILES['image']['size'] > 0) {
+                if ($_FILES['image']['type'] == "image/jpeg" || $_FILES['image']['type'] == "image/gif" || $_FILES['image']['type'] == "image/png") {
+                    $res = explode('.', $_FILES['image']['name']);
+                    $res = array_reverse($res);
+
+                    $filename = md5(uniqid()) . "." . $res[0];
+                    $upl = move_uploaded_file($_FILES['image']['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . "/uploads/" . $filename);
+
+                    if ($upl == true) {
+
+                        $arr = R::getRow("select COUNT(*) as count from products where title = ?", [$_POST['product_ru']]);
+                        if ($arr['count'] == 0) {
+                            $p = R::dispense('products');
+                            $p->title = safeRequests::clearData($_POST['product_ru']);
+                            $p->titleen = safeRequests::clearData($_POST['product_en']);
+                            $p->description = safeRequests::clearData($_POST['product_description']);
+                            $p->price = safeRequests::clearData($_POST['product_price']);
+                            $p->currency = safeRequests::clearData($_POST['currency']);
+                            $p->category_id = safeRequests::clearData($_POST['select_category']);
+                            $p->img = $filename;
+                            R::store($p);
+//                            header('location: /@admin/products/');
+                        } else {
+//                            echo '<script>alert("продукт уже существует"); window.location.href = window.location.href</script>';
+                        }
+
+                    } else{
+//                        echo "<script>alert('ошибка при загрузке изображения'); window.location.href = window.location.href</script>";
+                    }
+                }  else {
+//                    echo "<script>alert(' формат изображения неверный'); window.location.href = window.location.href</script>";
+                }
+            } else {
+
+                $arr = R::getRow("select COUNT(*) as count from products where title = ?", [$_POST['products_ru']]);
+                if ($arr['count'] == 0) {
+                    $p = R::dispense('products');
+                    $p->title = safeRequests::clearData($_POST['product_en']);
+                    $p->description = safeRequests::clearData($_POST['product_description']);
+                    $p->price = safeRequests::clearData($_POST['product_price']);
+                    $p->currency = safeRequests::clearData($_POST['currency']);
+                    $p->category_id = safeRequests::clearData($_POST['select_category']);
+                    $p->img = 'nophoto.jpg';
+
+                    R::store($p);
+                    header('location: /@admin/products/');
+                } else {
+                    echo '<script>alert("Категория уже существует"); window.location.href = window.location.href</script>';
+                }
+            }
+
+
+
+        }
+
+        $categories = R::getAll('select * from categories');
+        $products = R::getAll('select * from products');
+        $twig = $this->twig();
+        $page = $twig->render('dashboard/products.twig', ['products' => $products, 'list' => $categories]);
+        echo $twig->render('dashboard/admin.twig', ['content' => $page]);
+
+
+    }
+
     public function categories()
     {
-        //______________
+
         $categories = R::getAll('SELECT * FROM categories');
         if (isset($_POST['create_category'])) {
-
             $arr = R::getRow("SELECT COUNT(*) as total FROM 
                              categories WHERE title = ?", [$_POST['category_ru']]);
-            d($arr);
             if ($arr['total'] == 0) {
                 $c = R::dispense('categories');
                 $c->title = safeRequests::clearData($_POST['category_ru']);
@@ -76,9 +135,7 @@ class Admin extends Container implements ControllerInterface
                 echo '<script>alert("Категория уже существует"); window.location.href = window.location.href</script>';
             }
 
-        } //add new cat
-        //+++++++++++++
-
+        }
 
         $categories2 = R::getAll('SELECT * FROM categories ORDER BY id DESC');
         $twig = $this->twig();
@@ -111,8 +168,15 @@ class Admin extends Container implements ControllerInterface
     public function delcat()
     {
         echo ARGUMENT;
-        R::exec('DELETE FROM categories WHERE id = ?', [ARGUMENT]);
-        header('location: /@admin/categories/');
+        $delete_categories = R::exec('DELETE FROM categories WHERE id = ?', [ARGUMENT]);
+        $delete_products = R::exec('DELETE FROM products WHERE id = ?', [ARGUMENT]);
+
+        if ($delete_categories) {
+            header('location: /@admin/categories/');
+        } elseif ($delete_products) {
+            header('location: /@admin/products/');
+        }
+
     }
 
     public function exit()

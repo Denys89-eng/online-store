@@ -1,2 +1,66 @@
+<h1 class="title">Управление товарами</h1>
+<section>
+    <fieldset>
+        <legend>Добавить новый товар</legend>
 
-<h1>products</h1>
+        <form action="" method="post" class='products-form' enctype="multipart/form-data">
+
+            <div class="form-wrap">
+                <input type="text" name="product_ru" id="input-ru" placeholder="Enter link for product">
+                <input type="text" name="product_en" id="input-en" placeholder="Enter link for product">
+                <input type="file" name="image" accept="image/png">
+                <textarea name="product_description" id="" cols="30" rows="10"></textarea>
+                <input type="number" name="product_price" placeholder="Enter price for product">
+            </div>
+            <select name="select_category" id="">
+                {% for item in list %}
+                    <option value={{ item.id }}>{{ item.title }}</option>
+                {% endfor %}
+            </select>
+
+            <select  name="currency" id="">
+                <option hidden value="0"> Выберите валюту </option>
+                <option  value="UAN">₴(Гривен)</option>
+                <option  value="USD">$(Долларов)</option>
+            </select>
+
+            <button type="submit" name="create_product">Create new product</button>
+        </form>
+    </fieldset>
+</section>
+
+<section>
+    <fieldset>
+        <legend>Products list</legend>
+
+        <table class="default-table">
+            <thead>
+            <tr>
+                <td>id:</td>
+                <td>title:</td>
+                <td>description:</td>
+                <td>price:</td>
+                <td>currency:</td>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% for product in products %}
+                <tr>
+                    <td>{{ product.id }}</td>
+                    <td>{{ product.title }}</td>
+                    <td>{{ product.description }}</td>
+                    <td>{{ product.price }}</td>
+                    <td>{{ product.currency }}</td>
+                    <td>
+                        <a href="/@admin/delcat/{{ product.id }}/" title="delete">delete</a>
+                        <a href="">edit</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+
+    </fieldset>
+</section>

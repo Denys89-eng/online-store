@@ -5,6 +5,8 @@
   box-sizing: border-box;
 }
 
+
+
 fieldset {
   padding: 25px;
   border: 2px dashed lightgrey;
@@ -113,5 +115,8 @@ button{
   }
 }
 
+@import "category";
+@import "products";
 
-@import 'category';
+
+

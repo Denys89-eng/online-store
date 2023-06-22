@@ -33,6 +33,9 @@ header .header__menu {
   align-items: center;
   gap: 60px;
 }
+header .header__menu .menu__list {
+  display: flex;
+}
 header .header__menu .menu__link {
   width: 100px;
   height: 70px;
@@ -47,6 +50,21 @@ header .header__menu .menu__link {
 header .header__menu .menu__link:hover {
   color: white;
   background: grey;
+}
+
+.register__block {
+  width: 100%;
+  height: 100vh;
+  background: #aaaaee;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+.register__block form {
+  padding-inline: 3px;
+  width: 400px;
+  height: 200px;
+  border: 1px black solid;
 }
 
 /*# sourceMappingURL=style.css.map */

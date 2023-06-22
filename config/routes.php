@@ -7,6 +7,8 @@ $routes = [
     'contacts' => 'contacts|index',
     'error' => 'error404|index',
     'account' => 'account|index',
+    'register' => 'register|index',
+    'login' => 'login|index',
 
     '@admin' => 'admin|index',
     '@admin/login' => 'admin|login',

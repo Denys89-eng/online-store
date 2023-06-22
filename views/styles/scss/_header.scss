@@ -23,6 +23,10 @@ header {
     align-items: center;
     gap: 60px;
 
+    .menu__list {
+      display: flex;
+    }
+
     .menu__link {
       width: 100px;
       height: 70px;
