@@ -5,23 +5,54 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>11111</title>
+    <title>shop.loc</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="/views/styles/style.css">
+
 </head>
 <body>
-<header>
-    <div class="header__logo">
-        <img src="/views/image/Vanamo_Logo.png" alt="">
-    </div>
-    <div class="header__menu">
-            <a class="menu__link" href="/">Home</a>
-            <a class="menu__link" href="/about">About</a>
-            <a class="menu__link" href="/products">Products</a>
-            <a class="menu__link" href="/contacts">Contacts</a>
 
-        <div class="menu_auth">
-            <a href="/register">Register</a>
-            <a href="/login">Log in</a>
-        </div>
+<div class="main__line">
+
+    <div>
+        {{ account|raw }}
     </div>
+
+    <h1>
+        Online-Store
+    </h1>
+
+</div>
+<header>
+
+
+
+
+    <div class="header__menu">
+        <a class="menu__link" href="/">Home</a>
+        <a class="menu__link" href="/about">About</a>
+        <a class="menu__link" href="/contacts">Contacts</a>
+
+        <button class="btn-cart">
+            <img class="image" src="/views/icons/basket.svg" alt="">
+            <span>{{ list|raw }}</span>
+        </button>
+
+
+
+    </div>
+
+    <div class="block-cart">
+        <img class="image" src="/views/icons/basket.svg" alt="">
+        <button class="close-cart">CLOSE</button>
+
+        Cart
+
+        {{ list }}
+
+    </div>
+
+
 </header>

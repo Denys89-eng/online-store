@@ -5,6 +5,7 @@ use \RedBeanPHP\R;
 class Login extends Container implements ControllerInterface
 {
 
+
     public function index()
     {
 
@@ -16,7 +17,7 @@ class Login extends Container implements ControllerInterface
             if (!empty($res)) {
                 $pass = password_verify($password, $res->password);
                 if ($pass == true) {
-                    $_SESSION['x'] = true;
+                    $_SESSION['x'] = 1;
                     header('location: /account');
                 } else {
                     echo 'password not correct';
@@ -31,4 +32,12 @@ class Login extends Container implements ControllerInterface
         $html = $twig->render('login.twig');
         echo $html;
     }
+
+
+    public function exit()
+    {
+
+    }
+
+
 }

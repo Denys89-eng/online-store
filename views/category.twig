@@ -1,0 +1,56 @@
+<div class="container">
+
+
+    <div class="category__list">
+            <div class="category__item">
+                <a class="category__link" href="/">
+                    All products
+                </a>
+            </div>
+            {% for elem in category %}
+                <div class="category__item">
+                    <a class="category__link" href="/category/views/{{ elem.title }}">
+                        {{ elem.title }}
+                    </a>
+
+                    <div class="subcategory__list">
+                        <a href="" >{{ elem.name }}</a>
+                    </div>
+
+                </div>
+
+            {% endfor %}
+        </div>
+
+    <a class="waves-effect black btn link" href="/">
+        <i class="icon material-icons arrow_back">arrow_back</i>
+        Back
+    </a>
+    <h1 class="title__category">{{ name }}</h1>
+
+
+
+    <div class="product__list">
+        {% for product in products %}
+
+            <div class="product">
+                <a href="/product/views/{{ product.titleen }}" id="{{ product.id }}">
+                    <div class="card" style="width: 18rem;">
+                        <div class="img-wrap">
+                            <img src="/uploads/{{ product.img }}" class="card-img-top" alt="...">
+                        </div>
+
+                        <div class="card-body">
+                            <h5 class="card-title">{{ product.title }}</h5>
+                            <p class="card-text">{{ product.price }} {{ product.currency }} </p>
+                            <a class="waves-effect black btn buy-btn" href="/product/buy/{{ product.id }}">Buy</a>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+        {% endfor %}
+    </div>
+</div>
+
+

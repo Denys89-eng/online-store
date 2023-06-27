@@ -8,10 +8,16 @@
             <div class="form-wrap">
                 <input type="text" name="product_ru" id="input-ru" placeholder="Enter link for product">
                 <input type="text" name="product_en" id="input-en" placeholder="Enter link for product">
-                <input type="file" name="image" accept="image/png">
+                <input type="file" name="image" >
                 <textarea name="product_description" id="" cols="30" rows="10"></textarea>
                 <input type="number" name="product_price" placeholder="Enter price for product">
             </div>
+            <select name="select_subcategory" id="">
+                {% for elem in subcat %}
+                    <option value={{ elem.id }}>{{ elem.name }}</option>
+                {% endfor %}
+            </select>
+
             <select name="select_category" id="">
                 {% for item in list %}
                     <option value={{ item.id }}>{{ item.title }}</option>

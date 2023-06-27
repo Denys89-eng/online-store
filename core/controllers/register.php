@@ -42,9 +42,7 @@ class Register extends Container implements ControllerInterface {
 
 
        $twig = $this->twig();
-       $html = $twig->render('Layouts/header.twig');
-       $html .= $twig->render('register.twig');
-       $html .= $twig->render('Layouts/footer.twig');
+       $html = $twig->render('register.twig');
        echo $html;
    }
 

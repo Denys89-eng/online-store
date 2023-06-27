@@ -8,7 +8,6 @@ class Admin extends Container implements ControllerInterface
     public function index()
     {
         $twig = $this->twig();
-
         if (isset($_SESSION['p']) && $_SESSION['p'] === 20) {
             $this->statistics();
         } else {
@@ -23,7 +22,6 @@ class Admin extends Container implements ControllerInterface
         $twig = $this->twig();
         $page = $twig->render('dashboard/statistics.twig');
         echo $twig->render('dashboard/admin.twig', ['content' => $page]);
-
     }
 
 
@@ -71,29 +69,32 @@ class Admin extends Container implements ControllerInterface
                             $p->price = safeRequests::clearData($_POST['product_price']);
                             $p->currency = safeRequests::clearData($_POST['currency']);
                             $p->category_id = safeRequests::clearData($_POST['select_category']);
+                            $p->subcategory_id = safeRequests::clearData($_POST['select_subcategory']);
                             $p->img = $filename;
                             R::store($p);
-//                            header('location: /@admin/products/');
+                            header('location: /@admin/products/');
                         } else {
-//                            echo '<script>alert("продукт уже существует"); window.location.href = window.location.href</script>';
+                            echo '<script>alert("продукт уже существует"); window.location.href = window.location.href</script>';
                         }
 
                     } else{
-//                        echo "<script>alert('ошибка при загрузке изображения'); window.location.href = window.location.href</script>";
+                        echo "<script>alert('ошибка при загрузке изображения'); window.location.href = window.location.href</script>";
                     }
                 }  else {
-//                    echo "<script>alert(' формат изображения неверный'); window.location.href = window.location.href</script>";
+                    echo "<script>alert(' формат изображения неверный'); window.location.href = window.location.href</script>";
                 }
             } else {
 
                 $arr = R::getRow("select COUNT(*) as count from products where title = ?", [$_POST['products_ru']]);
                 if ($arr['count'] == 0) {
                     $p = R::dispense('products');
-                    $p->title = safeRequests::clearData($_POST['product_en']);
+                    $p->title = safeRequests::clearData($_POST['product_ru']);
+                    $p->titleen = safeRequests::clearData($_POST['product_en']);
                     $p->description = safeRequests::clearData($_POST['product_description']);
                     $p->price = safeRequests::clearData($_POST['product_price']);
                     $p->currency = safeRequests::clearData($_POST['currency']);
                     $p->category_id = safeRequests::clearData($_POST['select_category']);
+                    $p->subcategory_id = safeRequests::clearData($_POST['select_subcategory']);
                     $p->img = 'nophoto.jpg';
 
                     R::store($p);
@@ -108,9 +109,10 @@ class Admin extends Container implements ControllerInterface
         }
 
         $categories = R::getAll('select * from categories');
+        $subcategories = R::getAll('select * from subcategories');
         $products = R::getAll('select * from products');
         $twig = $this->twig();
-        $page = $twig->render('dashboard/products.twig', ['products' => $products, 'list' => $categories]);
+        $page = $twig->render('dashboard/products.twig', ['products' => $products, 'list' => $categories,'subcat' => $subcategories]);
         echo $twig->render('dashboard/admin.twig', ['content' => $page]);
 
 
@@ -127,12 +129,30 @@ class Admin extends Container implements ControllerInterface
                 $c = R::dispense('categories');
                 $c->title = safeRequests::clearData($_POST['category_ru']);
                 $c->link = safeRequests::clearData($_POST['category_en']);
-                $c->parentID = safeRequests::clearData($_POST['parent_category']);
-
                 R::store($c);
                 header('location: /@admin/categories/');
             } else {
                 echo '<script>alert("Категория уже существует"); window.location.href = window.location.href</script>';
+            }
+
+        }
+
+
+        if (isset($_POST['create_subcategory'])) {
+            $arr_sub = R::getRow("SELECT COUNT(*) as total FROM 
+                             subcategories WHERE name = ?", [$_POST['subcategory_ru']]);
+
+            if ($arr_sub['total'] == 0) {
+                $s = R::dispense('subcategories');
+                $s->name = safeRequests::clearData($_POST['subcategory_ru']);
+                $s->sublink = safeRequests::clearData($_POST['subcategory_en']);
+                $s->parentID = safeRequests::clearData($_POST['parent_category']);
+                R::store($s);
+                header('location: /@admin/categories/');
+
+            } else {
+                echo '<script>alert("Подкатегория уже существует"); window.location.href = window.location.href</script>';
+
             }
 
         }

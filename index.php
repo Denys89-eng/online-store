@@ -14,6 +14,7 @@ if (!file_exists('logs/systems.ini')) {
 require_once 'vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable('config');
 $dotenv->load();
+//d($_SESSION['cart']);
 
 require_once 'config/connect.php';
 require_once 'core/interfaces/controllerInterface.php';

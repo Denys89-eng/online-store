@@ -3,12 +3,15 @@
 $routes = [
     'home' => 'main|index',
     'about' => 'about|index',
-    'products' => 'products|index',
     'contacts' => 'contacts|index',
     'error' => 'error404|index',
     'account' => 'account|index',
+    'account/exit' => 'account|exit',
     'register' => 'register|index',
     'login' => 'login|index',
+    'product/views/.*' => 'product|index',
+    'product/buy/.*' => 'product|buy',
+    'category/views/.*' => 'category|index',
 
     '@admin' => 'admin|index',
     '@admin/login' => 'admin|login',

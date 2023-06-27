@@ -5,19 +5,27 @@
 <section>
     <fieldset>
         <legend>Add new category</legend>
-        <form action="" class="category-form" method="post">
-            <input name="category_ru" id="input-ru" type="text" placeholder="Create categories ru">
-            <input name="category_en" id="input-en" type="text" placeholder="Create categories en">
+        <div class="form-wrap">
+            <form action="" class="category-form" method="post">
+                <input name="category_ru" id="input-ru" type="text" placeholder="Create categories ru">
+                <input name="category_en" id="input-en" type="text" placeholder="Create categories en">
+                <button name="create_category" type="submit">Add categories</button>
+            </form>
+            <form action="" class="category-form" method="post">
+                <input name="subcategory_ru" id="input-ru" type="text" placeholder="Create subcategories ru">
+                <input name="subcategory_en" id="input-en" type="text" placeholder="Create subcategories en">
 
-            <select name="parent_category" id="">
-                <option hidden="hidden" value="0">Выберите родительскую категорию</option>
-                {% for item in array %}
-                    <option value="{{ item.id }}">{{ item.title }}</option>
-                {% endfor %}
-            </select>
+                <select name="parent_category" id="">
+                    <option hidden="hidden" value="0">Выберите родительскую категорию</option>
+                    {% for item in array %}
+                        <option value="{{ item.id }}">{{ item.title }}</option>
+                    {% endfor %}
+                </select>
 
-            <button name="create_category" type="submit">Add categories</button>
-        </form>
+                <button name="create_subcategory" type="submit">Add Subcategories</button>
+            </form>
+        </div>
+
     </fieldset>
 </section>
 
@@ -40,12 +48,13 @@
             </thead>
             <tbody>
 
+
             {% for elem in rows %}
                 <tr>
                     <td>{{ elem.id }}</td>
                     <td>{{ elem.title }}</td>
                     <td>{{ elem.link }}</td>
-                    <td>{{ elem.parentID }}</td>
+                    <td>{{ elem.parent }}</td>
                     <td>
                         <a href="/@admin/delcat/{{ elem.id }}/" title="delete">delete</a>
                         <a href="">edit</a>
