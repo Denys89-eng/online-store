@@ -11,7 +11,6 @@ class Main extends Container implements ControllerInterface
         $subcategory = R::getAll('SELECT * FROM categories LEFT JOIN subcategories ON categories.id = subcategories.parent_id');
 
 
-
         if (isset($_SESSION['x']) && $_SESSION['x'] == 1) {
             $a = '<a href="/account/exit">Log out</a>';
         } else {
@@ -19,7 +18,7 @@ class Main extends Container implements ControllerInterface
            <a href="/login">Login</a>';
         }
         $twig = $this->twig();
-        $html = $twig->render('Layouts/header.twig', ['account' => $a, ]);
+        $html = $twig->render('Layouts/header.twig', [ 'count' => CounterCart::count()]);
         $html .= $twig->render('main.twig', ['category' => $subcategory, 'products' => $products]);
         $html .= $twig->render('Layouts/footer.twig');
         echo $html;

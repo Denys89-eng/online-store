@@ -1,7 +1,7 @@
 <?php
 $uri = trim( parse_url($_SERVER['REQUEST_URI'],PHP_URL_PATH), '/');
 
-if ($uri === '') {
+if ($uri == '') {
     $array = explode('|', $routes['home']);
 } else {
    $section = explode('/',$uri);
@@ -11,7 +11,6 @@ if ($uri === '') {
 
        define("ARGUMENT",$section[2]);
    }
-
     if (isset($routes[$uri])) {
         $array = explode('|', $routes[$uri]);
     } else {
@@ -39,3 +38,6 @@ if (file_exists($file)) {
     Container::monolog('Controller not found');
     die('Controller not found');
 }
+
+
+

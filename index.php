@@ -16,12 +16,15 @@ $dotenv = Dotenv\Dotenv::createImmutable('config');
 $dotenv->load();
 //d($_SESSION['cart']);
 
+
 require_once 'config/connect.php';
 require_once 'core/interfaces/controllerInterface.php';
 require_once 'config/routes.php';
 require_once 'core/helpers/safeRequests.php';
 require_once 'core/helpers/container.php';
+require_once 'core/helpers/counterCart.php';
 require_once 'core/router.php';
+
 
 
 

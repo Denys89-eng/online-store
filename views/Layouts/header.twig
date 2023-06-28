@@ -35,24 +35,13 @@
         <a class="menu__link" href="/about">About</a>
         <a class="menu__link" href="/contacts">Contacts</a>
 
-        <button class="btn-cart">
+        <a href="/cart" class="btn-cart">
             <img class="image" src="/views/icons/basket.svg" alt="">
-            <span>{{ list|raw }}</span>
-        </button>
-
-
+            <span>{{ count|raw }}</span>
+        </a>
 
     </div>
 
-    <div class="block-cart">
-        <img class="image" src="/views/icons/basket.svg" alt="">
-        <button class="close-cart">CLOSE</button>
-
-        Cart
-
-        {{ list }}
-
-    </div>
 
 
 </header>

@@ -1,0 +1,51 @@
+<section style="background: white">
+    <h1>Cart</h1>
+
+    <table>
+        <thead>
+        <tr>
+            <td>
+               Название
+            </td>
+            <td>
+                Количество
+
+            </td>
+            <td>
+              Цена
+            </td>
+            <td>
+                Сумма
+            </td>
+            <td>
+
+            </td>
+        </tr>
+        </thead>
+        {% for product in cart %}
+            <tr>
+                <td>
+                    {{ product.title }}
+                </td>
+                <td>
+                    <a href="/cart/decrease/{{ product.id }}">-</a> <input type="text" value="{{ product.count }}"> <a href="/cart/increase/{{ product.id }}">+</a>
+                </td>
+                <td>
+                    {{ product.price }}
+                </td>
+                <td>
+                    {{ product.price * product.count }}
+                </td>
+                <td>
+                    <a href="/cart/delete/{{ product.id }}">Delete</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    <h3>{{ total }} грн</h3>
+
+    <form action="" method="post">
+        <input type="text"> <br>
+        <input type="text"> <br>
+    </form>
+</section>
